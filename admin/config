@@ -1,0 +1,99 @@
+backend:
+  name: github
+  repo: robertogrilli/sicche-roba-toscana
+  branch: main
+
+media_folder: "images"
+public_folder: "/images"
+
+collections:
+  - name: "menu"
+    label: "Menù"
+    label_singular: "Piatto"
+    folder: "_data/menu"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - { label: "ID", name: "id", widget: "string", hint: "Identificativo unico (es. ribollita, lampredotto)" }
+      - { label: "Categoria IT", name: "category_it", widget: "select", options: ["Zuppe", "Panini", "Piatti", "Dolci & Sfizi"], hint: "Categoria in italiano" }
+      - { label: "Categoria EN", name: "category_en", widget: "select", options: ["Soups", "Sandwiches", "Plates", "Sweets & Bites"], hint: "Category in English" }
+      - { label: "Nome IT", name: "name_it", widget: "string" }
+      - { label: "Nome EN", name: "name_en", widget: "string" }
+      - { label: "Descrizione IT", name: "description_it", widget: "text" }
+      - { label: "Descrizione EN", name: "description_en", widget: "text" }
+      - { label: "Prezzo (€)", name: "price", widget: "number", value_type: "float", min: 0, step: 0.5 }
+      - { label: "Foto Piatto", name: "image", widget: "image", hint: "Foto del piatto (formato 4:3, min 800px larghezza)" }
+      - { label: "Allergeni", name: "allergens", widget: "select", multiple: true, required: false, options: ["glutine", "latticini", "uova", "frutta a guscio", "sedano", "pesce", "soia", "crostacei", "arachidi", "senape", "sesamo", "lupini", "molluschi", "anidride solforosa"] }
+
+  - name: "reviews"
+    label: "Recensioni"
+    label_singular: "Recensione"
+    folder: "_data/reviews"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - { label: "Nome Recensore", name: "name", widget: "string" }
+      - { label: "Stelle", name: "stars", widget: "number", value_type: "int", min: 1, max: 5 }
+      - { label: "Testo IT", name: "text_it", widget: "text" }
+      - { label: "Testo EN", name: "text_en", widget: "text" }
+
+  - name: "settings"
+    label: "Impostazioni Sito"
+    files:
+      - name: "hours"
+        label: "Orari di Apertura"
+        file: "_data/settings/hours.json"
+        fields:
+          - label: "Orari"
+            name: "hours"
+            widget: "list"
+            fields:
+              - { label: "Giorno IT", name: "day_it", widget: "string" }
+              - { label: "Giorno EN", name: "day_en", widget: "string" }
+              - { label: "Orario", name: "time", widget: "string", hint: "Es. 08:00 – 15:00 oppure Chiuso / Closed" }
+              - { label: "Chiuso?", name: "closed", widget: "boolean", default: false }
+          - label: "Chiusure Straordinarie"
+            name: "special_closures"
+            widget: "list"
+            required: false
+            fields:
+              - { label: "Data", name: "date", widget: "date" }
+              - { label: "Motivo IT", name: "reason_it", widget: "string" }
+              - { label: "Motivo EN", name: "reason_en", widget: "string" }
+
+      - name: "contact"
+        label: "Contatti"
+        file: "_data/settings/contact.json"
+        fields:
+          - { label: "Telefono", name: "phone", widget: "string", hint: "Formato: +39 XXX XXX XXXX" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Indirizzo", name: "address", widget: "string" }
+          - { label: "Google Maps URL", name: "maps_url", widget: "string", hint: "URL embed di Google Maps" }
+          - { label: "Instagram URL", name: "instagram", widget: "string", required: false }
+          - { label: "Facebook URL", name: "facebook", widget: "string", required: false }
+
+      - name: "hero"
+        label: "Hero / Intestazione"
+        file: "_data/settings/hero.json"
+        fields:
+          - { label: "Immagine Hero", name: "hero_image", widget: "image", hint: "Foto principale del sito (min 1920px larghezza)" }
+          - { label: "Sottotitolo IT", name: "subtitle_it", widget: "string" }
+          - { label: "Sottotitolo EN", name: "subtitle_en", widget: "string" }
+
+      - name: "tourist"
+        label: "Sezione Turisti"
+        file: "_data/settings/tourist.json"
+        fields:
+          - label: "Consigli"
+            name: "tips"
+            widget: "list"
+            fields:
+              - { label: "Icona (emoji)", name: "icon", widget: "string" }
+              - { label: "Titolo IT", name: "title_it", widget: "string" }
+              - { label: "Titolo EN", name: "title_en", widget: "string" }
+              - { label: "Testo IT", name: "text_it", widget: "text" }
+              - { label: "Testo EN", name: "text_en", widget: "text" }
